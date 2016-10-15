@@ -1,6 +1,5 @@
 import tweepy
 import time
-from pprint import pprint
 from tweepy.error import TweepError
 
 
