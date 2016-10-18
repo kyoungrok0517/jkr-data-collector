@@ -15,6 +15,7 @@ LOG_LEVEL = 'INFO'
 logging.basicConfig(format=LOG_FORMAT, level=LOG_LEVEL)
 logger = logging.getLogger(__file__)
 
+
 @plac.annotations(
     target_lists=plac.Annotation('the target lists (every list if not specified)', 'option', 'l'),
     limit=plac.Annotation('The number of tweets to get from each target list', 'option', 'n', type=int),
