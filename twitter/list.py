@@ -64,7 +64,7 @@ def process_tweet(st):
     return {sel_field: st_obj[sel_field] for sel_field in fields}
 
 
-def get_list_tweets():
+def get_list_tweets(limit, target_lists):
     """A generator that yields tweets in my lists.
 
     Returns:
