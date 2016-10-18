@@ -72,16 +72,21 @@ def get_list_tweets(limit, target_lists):
     """
     api = init_api()
 
-    for list in api.lists_all():
-        owner_screen_name = list.user.screen_name
-        slug = list.slug
+    for l in api.lists_all():
+        # skip if not the target list
+        if target_lists and l not in target_lists:
+            continue
+
+        # get the necessary information for querying tweets in the list
+        owner_screen_name = l.user.screen_name
+        slug = l.slug
 
         try:
             for st in tweepy.Cursor(api.list_timeline,
                                     owner_screen_name=owner_screen_name,
-                                    slug=slug).items(10):
+                                    slug=slug).items(limit):
                 ptw = process_tweet(st)
-                ptw['from_list'] = list.slug
+                ptw['from_list'] = l.slug
                 yield ptw
         except TweepError as e:
             logger.error(e)

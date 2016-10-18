@@ -15,13 +15,17 @@ LOG_LEVEL = 'INFO'
 logging.basicConfig(format=LOG_FORMAT, level=LOG_LEVEL)
 logger = logging.getLogger(__file__)
 
-
-def twitter_list(limit=10, target_lists=None, output_file: ('The output file path', 'option', 'o')=None):
+@plac.annotations(
+    target_lists=plac.Annotation('the target lists (every list if not specified)', 'option', 'l'),
+    limit=plac.Annotation('The number of tweets to get from each target list', 'option', 'n', type=int),
+    output_file=plac.Annotation('The output file path', 'option', 'o')
+)
+def twitter_list(target_lists=None, limit=10, output_file=None):
     """Get the tweets from lists
 
     Arguments:
+        target_lists (list): the target lists (every list if not specified)
         limit (int): the number of tweets to get from each target list
-        target_lists (list): the lists to get tweets from
         output_file (str): the output file path
     """
     if not target_lists:
