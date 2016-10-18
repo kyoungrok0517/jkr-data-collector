@@ -1,0 +1,34 @@
+sudo: false
+branches:
+  only:
+    - master
+language: python
+addons:
+  apt:
+    sources:
+      - deadsnakes
+    packages:
+      - python3.5
+env:
+  - TOXENV=py27
+  - TOXENV=py33
+  - TOXENV=py34
+  - TOXENV=py35
+before_install:
+  - if [[ $TRAVIS_PYTHON_VERSION == 2* ]]; then pip install -r requirements.txt; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == 3* ]]; then pip install -r requirements-py3.txt; fi
+  - pip install tox
+  - pip install pytest
+  - pip install pytest-pep8
+  - pip install pytest-cov
+  - pip install sphinx
+  - pip install sphinx-autobuild
+  - pip install travis-sphinx
+install:
+  - python setup.py -q install
+  - travis-sphinx build
+script: tox
+after_success:
+  - travis-sphinx deploy
+notifications:
+  email: false
