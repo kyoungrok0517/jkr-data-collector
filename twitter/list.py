@@ -46,8 +46,8 @@ def process_tweet(st):
     Args:
         tw (Status): Tweepy Status instance
 
-    Returns:
-        A dictionary that contains only necessary fields
+    Yields:
+        dict: A dictionary that contains only necessary fields
     """
     fields = [
         'id_str',
