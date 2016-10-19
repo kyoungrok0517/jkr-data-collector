@@ -11,6 +11,13 @@ import json
 from twitter import TwitterCollector
 
 
+# set logging
+LOG_FORMAT = '%(asctime)s %(levelname)-8s %(message)s'
+LOG_LEVEL = 'WARNING'
+logging.basicConfig(format=LOG_FORMAT, level=LOG_LEVEL)
+logger = logging.getLogger(__file__)
+
+
 # setup Config mechanism
 class Config(object):
 

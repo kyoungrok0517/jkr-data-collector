@@ -2,21 +2,12 @@
 """Collect tweets in my lists.
 
 Todo:
-    * cleaner code?
     * add testing
 """
 from __future__ import print_function
-import logging
-import json
 import time
 import tweepy
 from tweepy.error import TweepError
-
-# set logging
-LOG_FORMAT = '%(asctime)s %(levelname)-8s %(message)s'
-LOG_LEVEL = 'WARNING'
-logging.basicConfig(format=LOG_FORMAT, level=LOG_LEVEL)
-logger = logging.getLogger(__file__)
 
 
 class TwitterCollector(object):
@@ -49,7 +40,7 @@ class TwitterCollector(object):
                                                             slug=slug).items(limit)):
                     ptw = self._process_tweet(st)
                     ptw['from_list'] = l.slug
-                    yield json.dumps(ptw)
+                    yield ptw
             except TweepError as e:
                 logger.error(e)
 
@@ -74,7 +65,7 @@ class TwitterCollector(object):
 
     @staticmethod
     def _process_tweet(st):
-        """Do the necessary
+        """Preserve only necessary fields from a given tweet
 
         Args:
             st (:obj:`Status`): `Tweepy` Status instance
