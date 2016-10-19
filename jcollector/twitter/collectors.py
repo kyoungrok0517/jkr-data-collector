@@ -8,6 +8,10 @@ from __future__ import print_function
 import time
 import tweepy
 from tweepy.error import TweepError
+from jcollector.utils import get_logger
+
+# set logging
+logger = get_logger(__file__)
 
 
 class TwitterCollector(object):
@@ -48,8 +52,7 @@ class TwitterCollector(object):
                 for st in self._limit_handler(tweepy.Cursor(self._api.list_timeline,
                                                             owner_screen_name=owner_screen_name,
                                                             slug=slug).items(limit)):
-                    ptw = self._process_tweet(st)
-                    ptw['from_list'] = l.slug
+                    ptw = self._get_item(st, from_list=l.slug)
                     yield ptw
             except TweepError as e:
                 logger.error(e)
@@ -74,7 +77,7 @@ class TwitterCollector(object):
                 time.sleep(15 * 60)
 
     @staticmethod
-    def _process_tweet(st):
+    def _get_item(st, from_list):
         """Preserve only necessary fields from a given tweet
 
         Args:
@@ -94,5 +97,6 @@ class TwitterCollector(object):
             'text',
             'coordinates'
         ]
-        st_obj = st._json
-        return {sel_field: st_obj[sel_field] for sel_field in fields}
+        st_obj = {sel_field: st._json[sel_field] for sel_field in fields}
+        st_obj['from_list'] = from_list
+        return st_obj

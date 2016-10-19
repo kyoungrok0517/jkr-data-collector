@@ -5,18 +5,13 @@
 """
 from __future__ import print_function
 from __future__ import with_statement
-
-import logging
-
 import click
 from jcollector.twitter import TwitterCollector
 from jcollector import settings
+from jcollector.utils import get_logger
 
 # set logging
-LOG_FORMAT = '%(asctime)s %(levelname)-8s %(message)s'
-LOG_LEVEL = 'WARNING'
-logging.basicConfig(format=LOG_FORMAT, level=LOG_LEVEL)
-logger = logging.getLogger(__file__)
+logger = get_logger(__file__)
 
 
 # setup Config mechanism
