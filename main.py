@@ -10,25 +10,47 @@ import logging
 import twitter_collector
 
 
-# set logging
-LOG_FORMAT = '%(asctime)s %(levelname)-8s %(message)s'
-LOG_LEVEL = 'INFO'
-logging.basicConfig(format=LOG_FORMAT, level=LOG_LEVEL)
-logger = logging.getLogger(__file__)
+# setup Config mechanism
+class Config(object):
+
+    def __init__(self):
+        self.verbose = False
+
+
+pass_config = click.make_pass_decorator(Config, ensure=True)
+
 
 # available commands
 sources = 'twitter news'.split()
 
 
-def main(*target_sources):
-    if target_sources:
-        # twitter
-        if 'twitter' in target_sources:
-            pass
+@click.group()
+@click.option('--verbose', is_flag=True)
+# @click.option('--home-directory', type=click.Path())
+@pass_config
+def cli(config, verbose):
+    """The entrypoint to jcollector
 
-        # news
-        if 'news' in target_sources:
-            pass
+    Arguments:
+        config (:obj:`Config`): global configs
+        verbose (bool): verbose mode
+    """
+    config.verbose = verbose
+
+
+@cli.command()
+def news(config):
+    pass
+
+
+@cli.command()
+@click.option('--limit', default=0, help='The number of documents to collect from each list.')
+@click.argument('out', type=click.File('w'), default='-', required=False)
+@pass_config
+def twitter(config, limit, out):
+    if config.verbose:
+        click.echo('We are in verbose mode')
+
 
 if __name__ == '__main__':
     pass
