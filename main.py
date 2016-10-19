@@ -7,7 +7,8 @@ from __future__ import print_function
 from __future__ import with_statement
 import click
 import logging
-import twitter
+import json
+from twitter import TwitterCollector
 
 
 # setup Config mechanism
@@ -18,10 +19,6 @@ class Config(object):
 
 
 pass_config = click.make_pass_decorator(Config, ensure=True)
-
-
-# available commands
-sources = 'twitter news'.split()
 
 
 @click.group()
@@ -45,12 +42,19 @@ def news(config):
 
 @cli.command()
 @click.option('--limit', default=0, help='The number of documents to collect from each list.')
-@click.argument('out', type=click.File('w'), default='-', required=False)
+@click.option('--out', default='-', type=click.File('w'))
 @pass_config
 def twitter(config, limit, out):
-    if config.verbose:
-        click.echo('We are in verbose mode')
+    # if config.verbose:
+    #     click.echo('We are in verbose mode')
 
+    # get the tweets
+    consumer_key = '1edbJ0RswuNVVfmhiXDz3tMtY'
+    consumer_secret = 'MQleCAeXtNkCHU0P5LHFETPpySxK46bh4A25CxNT76aG6Uq2Hc'
+    access_token = '17479200-o7Q1EEIXnsQnKlaPJuMlUbBThfLyUVp0sINi6668y'
+    access_token_secret = 'zkrsRSJNRJwobouNTDRyre0dTrLvFJ4isWOyTepq0T2Rc'
 
-if __name__ == '__main__':
-    pass
+    collector = TwitterCollector(consumer_key, consumer_secret, access_token, access_token_secret)
+    for tw in collector(limit=limit):
+        click.echo(tw, file=out)
+
