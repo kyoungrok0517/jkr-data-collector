@@ -26,11 +26,12 @@ setup(
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
         'Click',
-        'tweepy'
+        'tweepy',
+        'pymongo'
     ],
     entry_points='''
         [console_scripts]
-        jcollector=main:cli
+        jcollector=jcollector.run:cli
     ''',
     zip_safe=False
 )

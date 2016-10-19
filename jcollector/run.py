@@ -5,11 +5,11 @@
 """
 from __future__ import print_function
 from __future__ import with_statement
-import click
-import logging
-import json
-from twitter import TwitterCollector
 
+import logging
+
+import click
+from jcollector.twitter import TwitterCollector
 
 # set logging
 LOG_FORMAT = '%(asctime)s %(levelname)-8s %(message)s'
