@@ -1,2 +1,3 @@
-plac
+click
 six
+tweepy
