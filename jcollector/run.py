@@ -10,6 +10,7 @@ import logging
 
 import click
 from jcollector.twitter import TwitterCollector
+from jcollector import settings
 
 # set logging
 LOG_FORMAT = '%(asctime)s %(levelname)-8s %(message)s'
@@ -24,6 +25,12 @@ class Config(object):
     def __init__(self):
         self.verbose = False
 
+        # Twitter
+        self.twitter = dict()
+        self.twitter['consumer_key'] = settings.TWITTER_CONSUMER_KEY
+        self.twitter['consumer_secret'] = settings.TWITTER_CONSUMER_SECRET
+        self.twitter['access_token'] = settings.TWITTER_ACCESS_TOKEN
+        self.twitter['access_token_secret'] = settings.TWITTER_ACCESS_TOKEN_SECRET
 
 pass_config = click.make_pass_decorator(Config, ensure=True)
 
@@ -56,12 +63,7 @@ def twitter(config, limit, out):
     #     click.echo('We are in verbose mode')
 
     # get the tweets
-    consumer_key = '1edbJ0RswuNVVfmhiXDz3tMtY'
-    consumer_secret = 'MQleCAeXtNkCHU0P5LHFETPpySxK46bh4A25CxNT76aG6Uq2Hc'
-    access_token = '17479200-o7Q1EEIXnsQnKlaPJuMlUbBThfLyUVp0sINi6668y'
-    access_token_secret = 'zkrsRSJNRJwobouNTDRyre0dTrLvFJ4isWOyTepq0T2Rc'
-
-    collector = TwitterCollector(consumer_key, consumer_secret, access_token, access_token_secret)
+    collector = TwitterCollector(**config.twitter)
     for tw in collector(limit=limit):
         click.echo(tw, file=out)
 
