@@ -52,8 +52,8 @@ class TwitterCollector(object):
                 for st in self._limit_handler(tweepy.Cursor(self._api.list_timeline,
                                                             owner_screen_name=owner_screen_name,
                                                             slug=slug).items(limit)):
-                    ptw = self._get_item(st, from_list=l.slug)
-                    yield ptw
+                    tw = self._get_item(st, from_list=l.slug)
+                    yield tw
             except TweepError as e:
                 logger.error(e)
 
@@ -97,6 +97,6 @@ class TwitterCollector(object):
             'text',
             'coordinates'
         ]
-        st_obj = {sel_field: st._json[sel_field] for sel_field in fields}
-        st_obj['from_list'] = from_list
-        return st_obj
+        tw = {sel_field: st._json[sel_field] for sel_field in fields}
+        tw['from_list'] = from_list
+        return tw
