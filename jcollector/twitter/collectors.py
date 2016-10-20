@@ -49,13 +49,13 @@ class TwitterCollector(object):
             slug = l.slug
 
             try:
-                for st in self._limit_handler(tweepy.Cursor(self._api.list_timeline,
-                                                            owner_screen_name=owner_screen_name,
-                                                            slug=slug).items(limit)):
-                    tw = self._get_item(st, from_list=l.slug)
-                    yield tw
-            except TweepError as e:
-                logger.error(e)
+                for status in self._limit_handler(tweepy.Cursor(self._api.list_timeline,
+                                                                owner_screen_name=owner_screen_name,
+                                                                slug=slug).items(limit)):
+                    tweet = self._get_item(status, src=l.slug)
+                    yield tweet
+            except TweepError as err:
+                logger.error(err)
 
     @staticmethod
     def _init_api(consumer_key, consumer_secret,
@@ -77,7 +77,7 @@ class TwitterCollector(object):
                 time.sleep(15 * 60)
 
     @staticmethod
-    def _get_item(st, from_list):
+    def _get_item(status, src):
         """Preserve only necessary fields from a given tweet
 
         Args:
