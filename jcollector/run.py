@@ -10,6 +10,7 @@ import click
 from jcollector.utils.config import ConfigLoader 
 from jcollector.twitter import TwitterCollector
 from jcollector.utils import get_logger
+from pymongo import MongoClient
 
 # set logging
 logger = get_logger(__file__)
@@ -67,9 +68,12 @@ def twitter(config, limit, out, to_db):
         raise ValueError('limit must be integer!')
 
     # get the tweets
+    client = MongoClient('mongodb://localhost:27017')
+    db = client['jcollector']
+    collection = db['tweets']
     collector = TwitterCollector(**config.twitter)
-    for tw in collector(limit=limit):
+    for tweet in collector(limit=limit):
         if not to_db:
-            click.echo(tw, file=out)
+            click.echo(tweet, file=out)
         else:
-            logger.warning('to-db ON!')
+            collection.insert(tweet)

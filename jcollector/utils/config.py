@@ -27,15 +27,15 @@ class ConfigLoader(object):
     def get_mongo_config():
         """Returns mongo config object
 
-            keys = ['url', 'user', 'password']
+            keys = ['host', 'port', 'user', 'password', 'db']
 
         Returns:
             mongo_config (obj):
         """
         mongo_config = dict()
-        mongo_config['url'] = settings.MONGO_URL
+        mongo_config['host'] = settings.MONGO_HOST
+        mongo_config['port'] = settings.MONGO_PORT
         mongo_config['user'] = settings.MONGO_USER
         mongo_config['password'] = settings.MONGO_PASSWORD
         mongo_config['db'] = settings.MONGO_DB
-        mongo_config['port'] = settings.MONGO_PORT
         return mongo_config

@@ -81,10 +81,10 @@ class TwitterCollector(object):
         """Preserve only necessary fields from a given tweet
 
         Args:
-            st (:obj:`Status`): `Tweepy` Status instance
+            status (:obj:`Status`): `Tweepy` Status instance
 
         Yields:
-            tw(:obj:`dict`): A dictionary that contains only necessary fields
+            tweet (:obj:`dict`): A dictionary that contains only necessary fields
         """
         fields = [
             'id_str',
@@ -97,6 +97,6 @@ class TwitterCollector(object):
             'text',
             'coordinates'
         ]
-        tw = {sel_field: st._json[sel_field] for sel_field in fields}
-        tw['from_list'] = from_list
-        return tw
+        tweet = {sel_field: status._json[sel_field] for sel_field in fields}
+        tweet['from_list'] = src
+        return tweet
