@@ -3,3 +3,4 @@ jupyter
 ipython
 autopep8
 pytest
+matplotlib
