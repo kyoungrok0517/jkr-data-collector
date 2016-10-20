@@ -9,6 +9,9 @@
 - [ ] Goodreads
 - [ ] Amazon
 
+## Reddit
+- [ ] What sub-reddits?
+
 ## Shopping
 - [ ] 루리웹
 - [ ] 클리앙
