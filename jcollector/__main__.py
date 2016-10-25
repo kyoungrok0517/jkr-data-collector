@@ -41,12 +41,12 @@ def main(config, verbose):
     config.verbose = verbose
 
 
-@cli.command()
+@main.command()
 def news(config):
     pass
 
 
-@cli.command()
+@main.command()
 @click.option('--limit', default=0, help='The number of documents to collect from each list.')
 @click.option('--out', default='-', type=click.File('w'))
 @click.option('--to-db', is_flag=True)
