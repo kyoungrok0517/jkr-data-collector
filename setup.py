@@ -31,7 +31,7 @@ setup(
     ],
     entry_points='''
         [console_scripts]
-        jcollector=jcollector.run:cli
+        jcollector=jcollector.__main__:main
     ''',
     zip_safe=False
 )

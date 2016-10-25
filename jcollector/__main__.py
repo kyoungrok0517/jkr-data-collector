@@ -31,7 +31,7 @@ pass_config = click.make_pass_decorator(Config, ensure=True)
 @click.option('--verbose', is_flag=True)
 # @click.option('--home-directory', type=click.Path())
 @pass_config
-def cli(config, verbose):
+def main(config, verbose):
     """The entrypoint to jcollector
 
     Arguments:
