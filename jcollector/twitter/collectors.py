@@ -8,13 +8,14 @@ from __future__ import print_function
 import time
 import tweepy
 from tweepy.error import TweepError
-from jcollector.libs import get_logger
+from jcollector.libs.logging import get_logger
+from jcollector.libs.collectors import Collector
 
 # set logging
 logger = get_logger(__file__)
 
 
-class TwitterCollector(object):
+class TwitterCollector(Collector):
     """Collect tweets with given API keys
 
     """

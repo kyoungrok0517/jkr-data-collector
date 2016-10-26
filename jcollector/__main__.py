@@ -8,7 +8,7 @@ from __future__ import print_function, with_statement
 import click
 from pymongo import MongoClient
 
-from jcollector.libs import get_logger
+from jcollector.libs.logging import get_logger
 from jcollector.libs.config import ConfigLoader
 from jcollector.twitter import TwitterCollector
 
