@@ -3,7 +3,8 @@ include README.md
 include Dockerfile
 include MANIFEST
 include requirements.txt
-include requirements-py3.txt
+include requirements-dev.txt
+include .gitlab-ci.yml
 include *.py
 recursive-include docs *
 recursive-include scripts *
