@@ -12,9 +12,6 @@ from jcollector.libs.logging import get_logger
 from jcollector.libs.collectors import Collector
 from jcollector.libs.collectors import Item
 
-# set logging
-logger = get_logger(__file__)
-
 class Tweet(Item):
     """Tweet item
     fields = [
@@ -64,6 +61,7 @@ class TwitterCollector(Collector):
         consumer_secret = kwargs['consumer_secret']
         access_token = kwargs['access_token']
         access_token_secret = kwargs['access_token_secret']
+        self.logger = get_logger(self.__class__.__name__)
 
         # initiate tweepy API object
         self._api = self._init_api(consumer_key, consumer_secret,
@@ -77,6 +75,10 @@ class TwitterCollector(Collector):
             \*args: positional args
             \*\*kwargs: keyword args
         """
+        if self.stop:
+            self.logger.warning("Stop signal")
+            raise StopIteration()
+
         # get tweets from my lists
         for l in self._api.lists_all():
             owner_screen_name = l.user.screen_name
@@ -136,4 +138,4 @@ class TwitterCollector(Collector):
         return tweet
 
     def stop(self, uid, msg):
-        pass
+        self.stop = True

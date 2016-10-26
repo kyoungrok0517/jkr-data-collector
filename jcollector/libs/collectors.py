@@ -6,7 +6,11 @@ from abc import abstractmethod
 class Collector(ABC):
     """Abstract class for Collector
 
+    Attributes:
+        stop (bool): stop signal
     """
+    stop = False
+
     @abstractmethod
     def stop(self, uid, msg):
         """Stop the collector
