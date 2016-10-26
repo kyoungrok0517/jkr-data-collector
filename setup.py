@@ -10,7 +10,7 @@ def readme():
         return f.read()
 
 setup(
-    name='jkr-data-collector',
+    name='jcollector',
     version='0.0.1',
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
     url='https://github.com/kyoungrok0517/jkr-data-collector',
@@ -25,7 +25,13 @@ setup(
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
-        'plac'
+        'Click',
+        'tweepy',
+        'pymongo'
     ],
+    entry_points='''
+        [console_scripts]
+        jcollector=jcollector.__main__:main
+    ''',
     zip_safe=False
 )
