@@ -3,7 +3,14 @@
 
 ## Twitter
 - [ ] 구독하는 리스트의 트윗
-- [ ] 특정 아이디의 트윗
+
+## Book
+- [ ] Aladin
+- [ ] Goodreads
+- [ ] Amazon
+
+## Reddit
+- [ ] What sub-reddits?
 
 ## Shopping
 - [ ] 루리웹
