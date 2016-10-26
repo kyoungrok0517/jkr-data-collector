@@ -8,9 +8,11 @@ from __future__ import print_function, with_statement
 import click
 from pymongo import MongoClient
 
+from jcollector.libs.collectors import Item
 from jcollector.libs.logging import get_logger
 from jcollector.libs.config import ConfigLoader
 from jcollector.twitter import TwitterCollector
+from jcollector.pipelines import MongoPipeline
 
 # set logging
 logger = get_logger(__file__)
@@ -67,13 +69,15 @@ def twitter(config, limit, out, to_db):
     except ValueError:
         raise ValueError('limit must be integer!')
 
-    # get the tweets
-    client = MongoClient('mongodb://localhost:27017')
-    db = client['jcollector']
-    collection = db['tweets']
+    # init collector
     collector = TwitterCollector(**config.twitter)
+
+    # MongoPipeline
+    mongo_pipeline = MongoPipeline(config=config.mongo, collector=collector)
+
+    # get the tweets
     for tweet in collector(limit=limit):
         if not to_db:
             click.echo(tweet, file=out)
         else:
-            collection.insert(tweet)
+            mongo_pipeline.process(tweet, collection='twitter')

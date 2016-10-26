@@ -30,3 +30,8 @@ class Item(ABC):
             uid (str): the unique id
         """
         raise NotImplementedError
+
+    @abstractmethod
+    def __str__(self):
+        """String representation of the item"""
+        raise NotImplementedError

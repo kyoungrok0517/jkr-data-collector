@@ -10,9 +10,42 @@ import tweepy
 from tweepy.error import TweepError
 from jcollector.libs.logging import get_logger
 from jcollector.libs.collectors import Collector
+from jcollector.libs.collectors import Item
 
 # set logging
 logger = get_logger(__file__)
+
+class Tweet(Item):
+    """Tweet item
+    fields = [
+        'id_str',
+        'created_at',
+        'entities',
+        'favorite_count',
+        'favorited',
+        'lang',
+        'retweet_count',
+        'text',
+        'coordinates'
+    ]
+    """
+
+    def __init__(self, *args, **kwargs):
+        self.id_str = kwargs['id_str']
+        self.created_at = kwargs['created_at']
+        self.entities = kwargs['entities']
+        self.favorite_count = kwargs['favorite_count']
+        self.favorited = kwargs['favorited']
+        self.lang = kwargs['lang']
+        self.retweet_count = kwargs['retweet_count']
+        self.text = kwargs['text']
+        self.coordinates = kwargs['coordinates']
+
+    def get_uid(self):
+        return self.id_str
+
+    def __str__(self):
+        return str(self.__dict__)
 
 
 class TwitterCollector(Collector):
@@ -54,7 +87,7 @@ class TwitterCollector(Collector):
                                                                 owner_screen_name=owner_screen_name,
                                                                 slug=slug).items(limit)):
                     tweet = self._get_item(status, src=l.slug)
-                    yield tweet
+                    yield Tweet(**tweet)
             except TweepError as err:
                 logger.error(err)
 
@@ -101,3 +134,6 @@ class TwitterCollector(Collector):
         tweet = {sel_field: status._json[sel_field] for sel_field in fields}
         tweet['from_list'] = src
         return tweet
+
+    def stop(self, uid, msg):
+        pass

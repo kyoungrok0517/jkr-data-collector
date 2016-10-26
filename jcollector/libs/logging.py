@@ -5,7 +5,7 @@
 import logging
 
 
-def get_logger(name, logging_format='%(asctime)s %(levelname)-8s %(message)s', logging_level='WARNING'):
+def get_logger(name, logging_format='%(asctime)s %(levelname)-8s %(message)s', logging_level='INFO'):
     """Get the logger with a given name
 
     Arguments:
