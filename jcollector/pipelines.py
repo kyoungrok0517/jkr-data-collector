@@ -1,7 +1,7 @@
 """Pipelines
 
 """
-from jcollector.utils.config import ConfigLoader
+from jcollector.libs.config import ConfigLoader
 from pymongo import MongoClient
 
 class Pipeline(object):

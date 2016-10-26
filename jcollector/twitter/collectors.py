@@ -8,7 +8,7 @@ from __future__ import print_function
 import time
 import tweepy
 from tweepy.error import TweepError
-from jcollector.utils import get_logger
+from jcollector.libs import get_logger
 
 # set logging
 logger = get_logger(__file__)

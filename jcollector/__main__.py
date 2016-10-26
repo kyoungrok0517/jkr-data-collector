@@ -6,11 +6,11 @@
 from __future__ import print_function, with_statement
 
 import click
-
-from jcollector.utils.config import ConfigLoader 
-from jcollector.twitter import TwitterCollector
-from jcollector.utils import get_logger
 from pymongo import MongoClient
+
+from jcollector.libs import get_logger
+from jcollector.libs.config import ConfigLoader
+from jcollector.twitter import TwitterCollector
 
 # set logging
 logger = get_logger(__file__)
